@@ -19,17 +19,9 @@ public class MySQLController {
         msq.mostrarPrestamo(4);
     }
 
-    public static DatabaseConnector connector
-            = new DatabaseConnector(
-                    "localhost",
-                    "3306",
-                    "mutual_sol_de_mayo",
-                    "root",
-                    "",
-                    DatabaseConnector.MYSQL
-            );
+    public static DatabaseConnector connector = new DatabaseConnector("localhost", "3306", "mutual_sol_de_mayo", "root", "", DatabaseConnector.MYSQL);
 
-    public static void crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public String crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement newPrestamo = null, selectSolicitud = null;
         try {
@@ -47,7 +39,7 @@ public class MySQLController {
                     result = newPrestamo.executeUpdate("INSERT INTO Prestamo (id_solicitud,id_tabla_referencia,fecha,tasaInteres,monto) "
                             + "VALUES (" + id_solicitud + "," + id_tabla + "," + fecha + "," + tasaInteres + "," + monto + ");");
                 } else {
-                    System.out.println("Error: no existe una solicitud con el id: " + id_solicitud);
+                    return ("Error: no existe una solicitud con el id: " + id_solicitud);
                 }
                 connection.close();
             } catch (SQLException e) {
@@ -55,13 +47,13 @@ public class MySQLController {
             }
         }
         if (result == 1) {
-            System.out.println("Prestamo insertado correctamente");
+            return ("Prestamo insertado correctamente");
         } else {
-            System.out.println("Falló el insert en prestamo");
+            return ("Falló el insert en prestamo");
         }
     }
 
-    public static void modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement statament = null;
         String vals = "";
@@ -88,26 +80,22 @@ public class MySQLController {
         int result = 0;
         if (statament != null) {
             try {
-                System.out.print("CONSULTA: => ");
-                System.out.println("UPDATE Prestamo SET " + vals + " WHERE id_prestamo=" + id_prestamo);
+                //System.out.print("CONSULTA: => ");
+                //System.out.println("UPDATE Prestamo SET " + vals + " WHERE id_prestamo=" + id_prestamo);
                 result = statament.executeUpdate("UPDATE Prestamo SET " + vals + " WHERE id_prestamo=" + id_prestamo);
+                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
         if (result == 1) {
-            System.out.println("Prestamo modificado correctamente");
+            return ("Prestamo modificado correctamente");
         } else {
-            System.out.println("Falló el update en prestamo");
-        }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e);
+            return ("Falló el update en prestamo");
         }
     }
 
-    public void borrarPrestamo(int id_prestamo) {
+    public String borrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
         Statement deletePrestamo = null;
         try {
@@ -123,14 +111,14 @@ public class MySQLController {
             e.printStackTrace();
         }
         if (result == 1) {
-            System.out.println("Prestamo borrado correctamente");
+            return ("Prestamo borrado correctamente");
         } else {
-            System.out.println("Falló el delete en prestamo");
+            return ("Falló el delete en prestamo");
         }
     }
 
     //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
-    public void mostrarPrestamo(int id_prestamo) {
+    public String mostrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
         String datos = "";
@@ -139,30 +127,33 @@ public class MySQLController {
         } catch (Exception e) {
             System.out.println(e);
         }
-        ResultSet result = null;
+        ResultSet result;
         try {
             result = selectPrestamo.executeQuery("SELECT * FROM Prestamo JOIN Solicitud_prestamo ON id_prestamo");
+            StringBuffer buffer = new StringBuffer();
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");
             //System.out.println("| id_prestamo | id_solicitud | id_tabla_referencia | fecha      | tasaInteres | monto | id_solicitud | id_garante | id_socio | fecha      | resultado | monto    |");
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");
             while (result.next()) {
-                System.out.println("id_prestamo: "+result.getInt("id_prestamo"));
-                System.out.println("    ->id_solicitud: "+result.getInt(7));
-                System.out.println("    ->id_tabla_referencia: "+result.getInt("id_tabla_referencia"));
-                System.out.println("    ->fechaSolicitado: "+result.getString("fecha"));
-                System.out.println("    ->tasaInteres: "+result.getInt("tasaInteres"));
-                System.out.println("    ->montoSolicitado: "+result.getInt("monto"));
-                System.out.println("    ->id_garante: "+result.getInt("id_garante"));
-                System.out.println("    ->id_socio: "+result.getInt("id_socio"));
-                System.out.println("    ->fechaAprobado: "+result.getString(10));
-                System.out.println("    ->resultado: "+result.getInt("resultado"));
-                System.out.println("    ->montoOtorgado: "+result.getInt(12));
-                System.out.println("");
+                buffer.append("id_prestamo: ").append(result.getInt("id_prestamo"));
+                buffer.append("    ->id_solicitud: ").append(result.getInt(7));
+                buffer.append("    ->id_tabla_referencia: ").append(result.getInt("id_tabla_referencia"));
+                buffer.append("    ->fechaSolicitado: ").append(result.getString("fecha"));
+                buffer.append("    ->tasaInteres: ").append(result.getInt("tasaInteres"));
+                buffer.append("    ->montoSolicitado: ").append(result.getInt("monto"));
+                buffer.append("    ->id_garante: ").append(result.getInt("id_garante"));
+                buffer.append("    ->id_socio: ").append(result.getInt("id_socio"));
+                buffer.append("    ->fechaAprobado: ").append(result.getString(10));
+                buffer.append("    ->resultado: ").append(result.getInt("resultado"));
+                buffer.append("    ->montoOtorgado: ").append(result.getInt(12));
+                buffer.append("");
             }
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");
             connection.close();
+            return buffer.toString();
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 }
