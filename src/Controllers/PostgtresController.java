@@ -1,23 +1,33 @@
 package Controllers;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author nico
  */
 public class PostgtresController {
-
+    private static  Connection connection;
     public static DatabaseConnector connector = new DatabaseConnector("localhost", "5432", "MUTUAL_SOL_DE_MAYO",
             "postgres", "123", DatabaseConnector.POSTGRES);
 
+    public static void connectDB(){
+          connection = connector.getConexion();
+    }
+    public static void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostgtresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } 
     public static String borrarPrestamo(int id_prestamo) {
-        Connection connection = connector.getConexion();
+       
         Statement deletePrestamo = null;
         try {
             deletePrestamo = connection.createStatement();
@@ -28,7 +38,6 @@ public class PostgtresController {
         try {
             result = deletePrestamo
                     .executeUpdate("DELETE FROM  mutual.prestamo WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
-            connection.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
@@ -42,7 +51,6 @@ public class PostgtresController {
     public static String nuevoPrestamo(int id_solicitud, int id_tabla_referencia, String fecha, Double tasainteres,
             Double monto) {
 
-        Connection connection = connector.getConexion();
         Statement newPrestamo = null;
         Statement selectSolicitud = null;
         try {
@@ -60,13 +68,16 @@ public class PostgtresController {
                         + "where mutual.solicitudprestamo.id_solicitud =" + id_solicitud);
 //                System.out.println(resultadoSelect.next());
                 if (resultadoSelect.next()) {
+                    System.out.println("INSERT INTO mutual.prestamo "
+                            + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
+                            + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
+                            + ");");
                     result = newPrestamo.executeUpdate("INSERT INTO mutual.prestamo "
                             + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
                             + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
                             + ");");
                 }
 //                System.out.println("--------------------->" + result);
-                connection.close();
 
             } catch (SQLException e) {
                 System.out.println(e);
@@ -83,7 +94,6 @@ public class PostgtresController {
 
     public static String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha,
             double tasaInteres, double monto) {
-        Connection connection = connector.getConexion();
         Statement statament = null;
         try {
             statament = connection.createStatement();
@@ -124,11 +134,7 @@ public class PostgtresController {
                 System.out.println(e);
             }
         }
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
+        
         if (result == 1) {
             return ("Nuevo prestamo insertado");
         } else {
@@ -140,7 +146,7 @@ public class PostgtresController {
     // Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo
     // pidió y garantes).
     public static String mostrarPrestamo() {
-        Connection connection = connector.getConexion();
+       
         Statement selectPrestamo = null;
         String datos = "";
         try {
@@ -173,7 +179,7 @@ public class PostgtresController {
                 buffer.append(System.lineSeparator());
 
             }
-            connection.close();
+           
             return buffer.toString();
         } catch (SQLException e) {
             System.out.println(e);
