@@ -16,7 +16,7 @@ public class MySQLController {
         MySQLController msq = new MySQLController();
         //msq.modificarPrestamo(4, 0, 0, "'2017-04-05'", 0, 15000);
         //msq.borrarPrestamo(2);
-        msq.mostrarPrestamo(4);
+        //msq.mostrarPrestamo(4);
     }
 
     public static DatabaseConnector connector = new DatabaseConnector("localhost", "3306", "mutual_sol_de_mayo", "root", "", DatabaseConnector.MYSQL);
@@ -117,8 +117,7 @@ public class MySQLController {
         }
     }
 
-    //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
-    public String mostrarPrestamo(int id_prestamo) {
+    public String mostrarPrestamo() {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
         String datos = "";
