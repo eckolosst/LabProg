@@ -117,7 +117,7 @@ public class view {
         System.out.println("Ingrese el MONTO TOTAL del prestamo");
         double monto = TecladoIn.readFloat();
 
-        MySQLController.crearPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto);
+        System.out.println(MySQLController.crearPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto));
         System.out.println("");
 
     }
@@ -157,7 +157,7 @@ public class view {
         System.out.println("Ingrese el MONTO TOTAL del prestamo");
         double monto = TecladoIn.readFloat();
 
-        MySQLController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
+        String resultadoMySQL = MySQLController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println("");
     }
 
@@ -169,7 +169,7 @@ public class view {
     private static void borrarPrestamoMysql() {
         System.out.println("Ingrese el id del PRESTAMO");
         int id_prestamo = TecladoIn.readLineInt();
-        MySQLController.borrarPrestamo(id_prestamo);
+        System.out.println(MySQLController.borrarPrestamo(id_prestamo));
     }
 
     private static void showPrestamosPsql() {
@@ -178,9 +178,7 @@ public class view {
     
     
     private static void showPrestamosMysql() {
-        System.out.println("Ingrese el id del PRESTAMO");
-        int id_prestamo = TecladoIn.readLineInt();
-        MySQLController.mostrarPrestamo(id_prestamo);
+        System.out.println(MySQLController.mostrarPrestamo());
     }
 
 }

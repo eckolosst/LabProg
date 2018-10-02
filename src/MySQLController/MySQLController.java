@@ -21,7 +21,7 @@ public class MySQLController {
 
     public static DatabaseConnector connector = new DatabaseConnector("localhost", "3306", "mutual_sol_de_mayo", "root", "", DatabaseConnector.MYSQL);
 
-    public String crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public static String crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement newPrestamo = null, selectSolicitud = null;
         try {
@@ -53,7 +53,7 @@ public class MySQLController {
         }
     }
 
-    public String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public static String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement statament = null;
         String vals = "";
@@ -95,7 +95,7 @@ public class MySQLController {
         }
     }
 
-    public String borrarPrestamo(int id_prestamo) {
+    public static String borrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
         Statement deletePrestamo = null;
         try {
@@ -117,7 +117,7 @@ public class MySQLController {
         }
     }
 
-    public String mostrarPrestamo() {
+    public static String mostrarPrestamo() {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
         String datos = "";
