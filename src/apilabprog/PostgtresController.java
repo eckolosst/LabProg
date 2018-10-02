@@ -39,7 +39,7 @@ public class PostgtresController {
             result = deletePrestamo.executeUpdate("DELETE FROM  mutual.prestamo WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
             connection.close();
         } catch (SQLException e) {
-             System.out.println(e);
+            System.out.println(e);
         }
         if (result == 1) {
             System.out.println("Prestamo borrado correctamente");
@@ -146,9 +146,8 @@ public class PostgtresController {
         }
 
     }
-    
-    
-     //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
+
+    //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
     public static void mostrarPrestamo() {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
@@ -165,17 +164,17 @@ public class PostgtresController {
             System.out.println(" id_prestamo | id_solicitud | id_tabla_referencia |   fecha    |   tasainteres    | id_garante | id_socio |   fecha    | resultado |  monto");
             System.out.println("-------------+--------------+---------------------+------------+------------------+------------+----------+------------+-----------+---------");
             while (result.next()) {
-                System.out.println(result.getInt("id_prestamo")+"                      "+
-                        result.getInt("id_solicitud")+"                  "+
-                     result.getInt("id_tabla_referencia") +"         "+
-                        result.getString("fecha")+"     "+
-                        result.getInt("tasaInteres")+"                "+
-                        result.getInt("id_garante")+"             "+
-                        result.getInt("id_socio")+"       "+
-                        result.getString(10)+"          "+
-                        result.getInt("resultado")+"     "+
-                                result.getInt(12)
-                        );
+                System.out.println(result.getInt("id_prestamo") + "                      "
+                        + result.getInt("id_solicitud") + "                  "
+                        + result.getInt("id_tabla_referencia") + "         "
+                        + result.getString("fecha") + "     "
+                        + result.getInt("tasaInteres") + "                "
+                        + result.getInt("id_garante") + "             "
+                        + result.getInt("id_socio") + "       "
+                        + result.getString(10) + "          "
+                        + result.getInt("resultado") + "     "
+                        + result.getInt(12)
+                );
 //                System.out.println("    ->id_solicitud: "+result.getInt("id_solicitud"));
 //                System.out.println("    ->id_tabla_referencia: "+result.getInt("id_tabla_referencia"));
 //                System.out.println("    ->fechaSolicitado: "+result.getString("fecha"));
