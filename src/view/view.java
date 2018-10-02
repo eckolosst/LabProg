@@ -81,6 +81,7 @@ public class view {
                 view.showMenu();
                 break;
             case 9:
+                PostgtresController.closeConnection();
                 return;
 
         }
