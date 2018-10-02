@@ -113,7 +113,7 @@ public class view {
 
     private static void showPrestamos() {
 
-        PostgtresController.mostrarPrestamo();
+        System.out.println(PostgtresController.mostrarPrestamo());
     }
 
 }
