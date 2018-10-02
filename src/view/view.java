@@ -18,6 +18,7 @@ import Controllers.MySQLController;
 public class view {
 
     public static void main(String[] args) {
+        PostgtresController.connectDB();
         view.showMenu();
 
     }
