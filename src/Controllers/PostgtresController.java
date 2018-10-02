@@ -58,14 +58,14 @@ public class PostgtresController {
             try {
                 resultadoSelect = selectSolicitud.executeQuery("select * from mutual.solicitudprestamo "
                         + "where mutual.solicitudprestamo.id_solicitud =" + id_solicitud);
-                System.out.println(resultadoSelect.next());
+//                System.out.println(resultadoSelect.next());
                 if (resultadoSelect.next()) {
                     result = newPrestamo.executeUpdate("INSERT INTO mutual.prestamo "
                             + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
                             + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
                             + ");");
                 }
-                System.out.println("--------------------->" + result);
+//                System.out.println("--------------------->" + result);
                 connection.close();
 
             } catch (SQLException e) {
