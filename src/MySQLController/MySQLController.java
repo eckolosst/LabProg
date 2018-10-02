@@ -141,7 +141,7 @@ public class MySQLController {
         }
         ResultSet result = null;
         try {
-            result = selectPrestamo.executeQuery("SELECT * FROM Prestamo JOIN Solicitud_prestamo ON id_prestamo WHERE id_prestamo=" + id_prestamo+";");
+            result = selectPrestamo.executeQuery("SELECT * FROM Prestamo JOIN Solicitud_prestamo ON id_prestamo");
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");
             //System.out.println("| id_prestamo | id_solicitud | id_tabla_referencia | fecha      | tasaInteres | monto | id_solicitud | id_garante | id_socio | fecha      | resultado | monto    |");
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");

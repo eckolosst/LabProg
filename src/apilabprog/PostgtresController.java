@@ -14,13 +14,8 @@ import java.sql.Statement;
  */
 public class PostgtresController {
 
-    public static DatabaseConnector connector = new DatabaseConnector(
-            "localhost",
-            "5432",
-            "MUTUAL_SOL_DE_MAYO",
-            "postgres",
-            "123",
-            DatabaseConnector.POSTGRES);
+    public static DatabaseConnector connector = new DatabaseConnector("localhost", "5432", "MUTUAL_SOL_DE_MAYO",
+            "postgres", "123", DatabaseConnector.POSTGRES);
 
     public static String borrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
@@ -32,7 +27,8 @@ public class PostgtresController {
         }
         int result = 0;
         try {
-            result = deletePrestamo.executeUpdate("DELETE FROM  mutual.prestamo WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
+            result = deletePrestamo
+                    .executeUpdate("DELETE FROM  mutual.prestamo WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
             connection.close();
         } catch (SQLException e) {
             System.out.println(e);
@@ -44,7 +40,8 @@ public class PostgtresController {
         }
     }
 
-    public static String nuevoPrestamo(int id_solicitud, int id_tabla_referencia, String fecha, Double tasainteres, Double monto) {
+    public static String nuevoPrestamo(int id_solicitud, int id_tabla_referencia, String fecha, Double tasainteres,
+            Double monto) {
 
         Connection connection = connector.getConexion();
         Statement newPrestamo = null;
@@ -65,14 +62,9 @@ public class PostgtresController {
                 System.out.println(resultadoSelect.next());
                 if (resultadoSelect.next()) {
                     result = newPrestamo.executeUpdate("INSERT INTO mutual.prestamo "
-                            + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n"
-                            + "VALUES ("
-                            + id_solicitud + ","
-                            + id_tabla_referencia + ","
-                            + "'" + fecha + "'" + ","
-                            + tasainteres + ","
-                            + monto + ");"
-                    );
+                            + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
+                            + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
+                            + ");");
                 }
                 System.out.println("--------------------->" + result);
                 connection.close();
@@ -90,7 +82,8 @@ public class PostgtresController {
 
     }
 
-    public static String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public static String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha,
+            double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement statament = null;
         try {
@@ -123,9 +116,11 @@ public class PostgtresController {
         int result = 0;
         if (statament != null) {
             try {
-//                System.out.print("CONSULTA: => ");
-//                System.out.println("UPDATE mutual.prestamo SET " + vals + " WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
-                result = statament.executeUpdate("UPDATE mutual.prestamo SET " + vals + " WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
+                // System.out.print("CONSULTA: => ");
+                // System.out.println("UPDATE mutual.prestamo SET " + vals + " WHERE
+                // mutual.prestamo.id_prestamo=" + id_prestamo);
+                result = statament.executeUpdate(
+                        "UPDATE mutual.prestamo SET " + vals + " WHERE mutual.prestamo.id_prestamo=" + id_prestamo);
             } catch (SQLException e) {
                 System.out.println(e);
             }
@@ -143,7 +138,8 @@ public class PostgtresController {
 
     }
 
-    //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
+    // Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo
+    // pidió y garantes).
     public static String mostrarPrestamo() {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
@@ -155,27 +151,26 @@ public class PostgtresController {
         }
         ResultSet result;
         try {
-            result = selectPrestamo.executeQuery("select * from mutual.prestamo join mutual.solicitudprestamo on mutual.prestamo.id_solicitud=mutual.solicitudprestamo.id_solicitud;");
+            result = selectPrestamo.executeQuery(
+                    "select * from mutual.prestamo join mutual.solicitudprestamo on mutual.prestamo.id_solicitud=mutual.solicitudprestamo.id_solicitud;");
             StringBuffer buffer = new StringBuffer();
-            buffer.append("-------------+--------------+---------------------+------------+------------------+------------+----------+------------+-----------+---------");
+            buffer.append(
+                    "-------------+--------------+---------------------+------------+------------------+------------+----------+------------+-----------+---------");
             buffer.append(System.lineSeparator());
-            buffer.append(" id_prestamo | id_solicitud | id_tabla_referencia |   fecha    |   tasainteres    | id_garante | id_socio |   fecha    | resultado |  monto");
+            buffer.append(
+                    " id_prestamo | id_solicitud | id_tabla_referencia |   fecha    |   tasainteres    | id_garante | id_socio |   fecha    | resultado |  monto");
             buffer.append(System.lineSeparator());
-            buffer.append("-------------+--------------+---------------------+------------+------------------+------------+----------+------------+-----------+---------");
+            buffer.append(
+                    "-------------+--------------+---------------------+------------+------------------+------------+----------+------------+-----------+---------");
             buffer.append(System.lineSeparator());
 
             while (result.next()) {
-                buffer.append(result.getInt("id_prestamo") + "                      "
-                        + result.getInt("id_solicitud") + "                  "
-                        + result.getInt("id_tabla_referencia") + "         "
-                        + result.getString("fecha") + "     "
-                        + result.getInt("tasaInteres") + "                "
-                        + result.getInt("id_garante") + "             "
-                        + result.getInt("id_socio") + "       "
-                        + result.getString(10) + "          "
-                        + result.getInt("resultado") + "     "
-                        + result.getInt(12)
-                );
+                buffer.append(result.getInt("id_prestamo") + "                      " + result.getInt("id_solicitud")
+                        + "                  " + result.getInt("id_tabla_referencia") + "         "
+                        + result.getString("fecha") + "     " + result.getInt("tasaInteres") + "                "
+                        + result.getInt("id_garante") + "             " + result.getInt("id_socio") + "       "
+                        + result.getString(10) + "          " + result.getInt("resultado") + "     "
+                        + result.getInt(12));
                 buffer.append(System.lineSeparator());
 
             }
