@@ -29,7 +29,7 @@ public class MySQLController {
                     DatabaseConnector.MYSQL
             );
 
-    public void crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public static void crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement newPrestamo = null, selectSolicitud = null;
         try {
@@ -61,7 +61,7 @@ public class MySQLController {
         }
     }
 
-    public void modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
+    public static void modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
         Connection connection = connector.getConexion();
         Statement statament = null;
         String vals = "";

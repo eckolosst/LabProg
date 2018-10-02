@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import utils.TecladoIn;
 import apilabprog.PostgtresController;
+import MySQLController.MySQLController;
 
 /**
  *
@@ -70,7 +71,7 @@ public class view {
         int id_tabla = TecladoIn.readLineInt();
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
-//        System.out.println("Current Date: " + ft.format(dNow)); con el formato YYYY/MM/DD
+        //System.out.println("Current Date: " + ft.format(dNow)); con el formato YYYY/MM/DD
         System.out.println("Ingrese el porcentaje de INTERES");
         double interes = TecladoIn.readFloat();
         System.out.println("Ingrese el MONTO TOTAL del prestamo");
@@ -78,20 +79,42 @@ public class view {
 
         String resultado = PostgtresController.nuevoPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println(resultado);
+        MySQLController.crearPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println("");
 
     }
 
     private static void modificarPrestamo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Ingrese el id del PRESTAMO");
+        int id_prestamo = TecladoIn.readLineInt();
+        System.out.println("Ingrese el id de la SOLICITUD ASOCIADA ");
+        int id_solicitud = TecladoIn.readLineInt();
+        System.out.println("Ingrese el id de la TABLA DE REFERENCIA ASOCIADA ");
+        int id_tabla = TecladoIn.readLineInt();
+        Date dNow = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        //System.out.println("Current Date: " + ft.format(dNow)); con el formato YYYY/MM/DD
+        System.out.println("Ingrese el porcentaje de INTERES");
+        double interes = TecladoIn.readFloat();
+        System.out.println("Ingrese el MONTO TOTAL del prestamo");
+        double monto = TecladoIn.readFloat();
+
+        String resultadoPSQL = PostgtresController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
+        MySQLController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
+        System.out.println(resultadoPSQL);
+        System.out.println("");
     }
 
     private static void borrarPrestamo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Ingrese el id del PRESTAMO");
+        int id_prestamo = TecladoIn.readLineInt();
+        PostgtresController.borrarPrestamo(id_prestamo);
     }
 
     private static void showPrestamos() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("Ingrese el id del PRESTAMO");
+        int id_prestamo = TecladoIn.readLineInt();
+        PostgtresController.mostrarPrestamo(id_prestamo);
     }
 
 }
