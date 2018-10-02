@@ -107,7 +107,7 @@ public class MySQLController {
         }
     }
 
-    public void borrarPrestamo(int id_prestamo) {
+    public static void borrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
         Statement deletePrestamo = null;
         try {
@@ -130,7 +130,7 @@ public class MySQLController {
     }
 
     //Mostrar todos los préstamos junto con los datos de la solicitdu (quien lo pidió y garantes).
-    public void mostrarPrestamo(int id_prestamo) {
+    public static void mostrarPrestamo(int id_prestamo) {
         Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
         String datos = "";
