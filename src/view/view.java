@@ -35,8 +35,8 @@ public class view {
         System.out.println("8- MYSQL Mostrar todos los prestamos");
         System.out.println("9- Salir");
         int opcion = TecladoIn.readLineInt();
-        while (opcion > 5 || opcion < 1) {
-            System.out.println("OPCION INCORRECTA, ELIJA 1, 2, 3, 4 o 5.    ¿SE ENTIENDE?");
+        while (opcion > 9 || opcion < 1) {
+            System.out.println("OPCION INCORRECTA, ELIJA 1, 2, 3, 4, 5, 6, 7, 8 o 9");
             opcion = TecladoIn.readLineInt();
         }
 

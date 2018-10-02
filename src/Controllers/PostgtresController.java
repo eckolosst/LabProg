@@ -60,6 +60,10 @@ public class PostgtresController {
                         + "where mutual.solicitudprestamo.id_solicitud =" + id_solicitud);
 //                System.out.println(resultadoSelect.next());
                 if (resultadoSelect.next()) {
+                    System.out.println("INSERT INTO mutual.prestamo "
+                            + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
+                            + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
+                            + ");");
                     result = newPrestamo.executeUpdate("INSERT INTO mutual.prestamo "
                             + "(id_solicitud,id_tabla_referencia,fecha,tasainteres,monto)\n" + "VALUES (" + id_solicitud
                             + "," + id_tabla_referencia + "," + "'" + fecha + "'" + "," + tasainteres + "," + monto
