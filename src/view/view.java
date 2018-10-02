@@ -18,6 +18,7 @@ import Controllers.MySQLController;
 public class view {
 
     public static void main(String[] args) {
+//        MySQLController.connectDB();
         PostgtresController.connectDB();
         view.showMenu();
 
@@ -84,6 +85,15 @@ public class view {
                 break;
             case 9:
                 PostgtresController.closeConnection();
+//                MySQLController.close9Connection();
+                System.out.println(""
+                        + " ________\n"
+                        + "|￣￣￣￣￣| \n"
+                        + "|   BYE! |\n"
+                        + "|________|\n"
+                        + "(\\__/) ||\n"
+                        + "(•ㅅ•) || \n"
+                        + "/ 　 づ");
                 return;
 
         }
@@ -115,6 +125,7 @@ public class view {
         System.out.println("");
 
     }
+
     private static void nuevoPrestamoMysql() {
         System.out.println("+----------------------------------------+");
         System.out.println("| Ingrese el id de la SOLICITUD ASOCIADA |");
@@ -153,7 +164,7 @@ public class view {
         System.out.println("+--------------------------------------------------+");
         System.out.println("| Ingrese el id de la TABLA DE REFERENCIA ASOCIADA |");
         System.out.println("+--------------------------------------------------+");
-        
+
         int id_tabla = TecladoIn.readLineInt();
         Date dNow = new Date();
         SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
@@ -171,6 +182,7 @@ public class view {
         System.out.println(resultadoPSQL);
         System.out.println("");
     }
+
     private static void modificarPrestamoMysql() {
         System.out.println("+----------------------------+");
         System.out.println("| Ingrese el id del PRESTAMO |");
@@ -205,8 +217,9 @@ public class view {
         System.out.println("| Ingrese el id del PRESTAMO |");
         System.out.println("+----------------------------+");
         int id_prestamo = TecladoIn.readLineInt();
-        System.out.println( PostgtresController.borrarPrestamo(id_prestamo));
+        System.out.println(PostgtresController.borrarPrestamo(id_prestamo));
     }
+
     private static void borrarPrestamoMysql() {
         System.out.println("+----------------------------+");
         System.out.println("| Ingrese el id del PRESTAMO |");
@@ -218,8 +231,7 @@ public class view {
     private static void showPrestamosPsql() {
         System.out.println(PostgtresController.mostrarPrestamo());
     }
-    
-    
+
     private static void showPrestamosMysql() {
         System.out.println(MySQLController.mostrarPrestamo());
     }

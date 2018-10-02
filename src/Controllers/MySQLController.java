@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -19,9 +21,21 @@ public class MySQLController {
     }
 
     public static DatabaseConnector connector = new DatabaseConnector("localhost", "3306", "mutual_sol_de_mayo", "root", "", DatabaseConnector.MYSQL);
+    private static Connection connection;
+
+    public static void connectDB() {
+        connection = connector.getConexion();
+    }
+
+    public static void closeConnection() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(PostgtresController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     public static String crearPrestamo(int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
-        Connection connection = connector.getConexion();
         Statement newPrestamo = null, selectSolicitud = null;
         try {
             newPrestamo = connection.createStatement();
@@ -40,7 +54,6 @@ public class MySQLController {
                 } else {
                     return ("Error: no existe una solicitud con el id: " + id_solicitud);
                 }
-                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -53,7 +66,6 @@ public class MySQLController {
     }
 
     public static String modificarPrestamo(int id_prestamo, int id_solicitud, int id_tabla, String fecha, double tasaInteres, double monto) {
-        Connection connection = connector.getConexion();
         Statement statament = null;
         String vals = "";
         if (id_solicitud != 0) {
@@ -82,7 +94,6 @@ public class MySQLController {
                 //System.out.print("CONSULTA: => ");
                 //System.out.println("UPDATE Prestamo SET " + vals + " WHERE id_prestamo=" + id_prestamo);
                 result = statament.executeUpdate("UPDATE Prestamo SET " + vals + " WHERE id_prestamo=" + id_prestamo);
-                connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -95,7 +106,6 @@ public class MySQLController {
     }
 
     public static String borrarPrestamo(int id_prestamo) {
-        Connection connection = connector.getConexion();
         Statement deletePrestamo = null;
         try {
             deletePrestamo = connection.createStatement();
@@ -105,7 +115,6 @@ public class MySQLController {
         int result = 0;
         try {
             result = deletePrestamo.executeUpdate("DELETE FROM  Prestamo WHERE id_prestamo=" + id_prestamo);
-            connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -117,7 +126,6 @@ public class MySQLController {
     }
 
     public static String mostrarPrestamo() {
-        Connection connection = connector.getConexion();
         Statement selectPrestamo = null;
         String datos = "";
         try {
@@ -147,7 +155,6 @@ public class MySQLController {
                 buffer.append("");
             }
             //System.out.println("+-------------+--------------+---------------------+------------+-------------+-------+--------------+------------+----------+------------+-----------+----------+");
-            connection.close();
             return buffer.toString();
         } catch (SQLException e) {
             e.printStackTrace();
