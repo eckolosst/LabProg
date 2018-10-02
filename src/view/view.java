@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package apilabprog;
+package view;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import utils.TecladoIn;
-import apilabprog.PostgtresController;
-import MySQLController.MySQLController;
+import Controllers.PostgtresController;
+import Controllers.MySQLController;
 
 /**
  *
@@ -100,7 +100,6 @@ public class view {
 
         String resultado = PostgtresController.nuevoPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println(resultado);
-//        MySQLController.crearPrestamo(id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println("");
 
     }
@@ -138,7 +137,6 @@ public class view {
         double monto = TecladoIn.readFloat();
 
         String resultadoPSQL = PostgtresController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
-//        MySQLController.modificarPrestamo(id_prestamo, id_solicitud, id_tabla, ft.format(dNow), interes, monto);
         System.out.println(resultadoPSQL);
         System.out.println("");
     }
@@ -164,7 +162,7 @@ public class view {
     private static void borrarPrestamoPsql() {
         System.out.println("Ingrese el id del PRESTAMO");
         int id_prestamo = TecladoIn.readLineInt();
-        PostgtresController.borrarPrestamo(id_prestamo);
+        System.out.println( PostgtresController.borrarPrestamo(id_prestamo));
     }
     private static void borrarPrestamoMysql() {
         System.out.println("Ingrese el id del PRESTAMO");

@@ -1,6 +1,6 @@
 package test;
 
-import apilabprog.DatabaseConnector;
+import Controllers.DatabaseConnector;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
