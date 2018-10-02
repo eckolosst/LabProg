@@ -112,9 +112,8 @@ public class view {
     }
 
     private static void showPrestamos() {
-        System.out.println("Ingrese el id del PRESTAMO");
-        int id_prestamo = TecladoIn.readLineInt();
-        PostgtresController.mostrarPrestamo(id_prestamo);
+
+        PostgtresController.mostrarPrestamo();
     }
 
 }
