@@ -87,7 +87,7 @@ BEGIN
   DECLARE mont FLOAT;
   DECLARE fin int DEFAULT 0;
   DECLARE edad int;
-  DECLARE cursor_solicitud CURSOR FOR SELECT id_solicitud, monto, fecha_nacimiento AS fecha_garante FROM Solicitud NATURAL JOIN Garante;
+  DECLARE cursor_solicitud CURSOR FOR SELECT id_solicitud, monto, fecha_nacimiento AS fecha_garante FROM Solicitud_prestamo NATURAL JOIN Garante NATURAL JOIN Persona;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
   OPEN cursor_solicitud;
