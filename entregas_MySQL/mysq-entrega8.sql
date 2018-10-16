@@ -52,23 +52,25 @@ CREATE PROCEDURE listarCuotas()
 BEGIN
   DECLARE id INT;
   DECLARE vence DATE;
+  DECLARE cadena VARCHAR(255);
+  DECLARE i int;
+  DECLARE fin int DEFAULT 0;
   DECLARE cursor_cuota CURSOR FOR SELECT id_cuota, vencimiento FROM Cuota;
-  DECLARE fin_repeat int DEFAULT 0;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
-  SET cadena = '':
+  SET cadena = '';
   SET i = 0;
 
   OPEN cursor_cuota;
   REPEAT
     FETCH cursor_cuota INTO id, vence;
     SET i = i + 1;
-    SET str = CONCAT(str,x,' - ',id,' vence: ',vence,'\n');
+    SET cadena = CONCAT(cadena,i,' - ',id,' vence: ',vence,'\n');
 
   UNTIL (fin=1)
   END REPEAT;
 
-  COLSE cursor_cuota;
+  CLOSE cursor_cuota;
   SELECT cadena;
 END //
 DELIMITER;
