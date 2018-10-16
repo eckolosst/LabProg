@@ -65,7 +65,7 @@ BEGIN
     SET i = i + 1;
     SET str = CONCAT(str,x,' - ',id,' vence: ',vence,'\n');
 
-  UNTIL (fin=1);
+  UNTIL (fin=1)
   END REPEAT;
 
   COLSE cursor_cuota;
@@ -73,16 +73,40 @@ BEGIN
 END //
 DELIMITER;
 
+CALL listarCuotas();
+
 -- d - Realizar un procedimiento (utilizando cursores) que recorra la relación solicitud préstamo y modifique el monto en un 30% más si
 -- alguno de sus garantes  tienen más de 70 años  y en un 15%  si tienen entre 60 y 70 años.
 DELIMITER //
-CREATE PROCEDURE listarCuotas()
+CREATE PROCEDURE aumentarMontoGarantesAncianos()
 BEGIN
+  DECLARE id int;
+  DECLARE fecha_nac date;
+  DECLARE mont FLOAT;
+  DECLARE fin int DEFAULT 0;
+  DECLARE edad int;
+  DECLARE cursor_solicitud CURSOR FOR SELECT id_solicitud, monto, fecha_nacimiento AS fecha_garante FROM Solicitud NATURAL JOIN Garante;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
-  DECLARE cursor CURSOR FOR SELECT   FROM ;
+  OPEN cursor_solicitud;
+  REPEAT
+    FETCH cursor_solicitud INTO id, mont, fecha_nac;
+    SELECT diferenciaFechas(NOW(),fecha_nac) INTO edad;
+    IF (edad > 365*70) THEN
+      UPDATE Solicitud_prestamo SET monto=mont+mont*0.3 WHERE id_solicitud=id;
+    ELSEIF (edad > 365*60) THEN
+      UPDATE Solicitud_prestamo SET monto=mont+mont*0.15 WHERE id_solicitud=id;
+    END IF;
 
+  UNTIL (fin=1)
+  END REPEAT;
+
+  CLOSE cursor_solicitud;
+  SELECT 1;
 END //
 DELIMITER;
+
+CALL aumentarMontoGarantesAncianos();
 
 -- e - Realice un procedimiento que posea un parámetro de entrada (cantidad de años),  uno de salida (tasa interés) y dos de entrada/salida
 -- (estado, monto), busque aquellos préstamos que hayan iniciado hace más tiempo que la cantidad de años ingresada, posean el mismo estado
