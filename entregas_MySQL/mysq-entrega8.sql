@@ -114,12 +114,35 @@ CALL aumentarMontoGarantesAncianos();
 -- (estado, monto), busque aquellos préstamos que hayan iniciado hace más tiempo que la cantidad de años ingresada, posean el mismo estado
 -- y monto, y le cambie la tasa de interés a un 5% más de lo que ya tenía. Debe listar el estado, monto, tasa de interés actual y cantidad
 -- modificados.
+--MySQL
 DELIMITER //
-CREATE PROCEDURE listarCuotas()
+CREATE PROCEDURE actualizarPrestamos(IN anios, OUT add_tasa FLOAT, INOUT mont)
 BEGIN
+  DECLARE id int;
+  DECLARE mont FLOAT;
+  DECLARE tasa FLOAT;
+  DECLARE i int;
+  DECLARE cant int;
+  DECLARE fin int DEFAULT 0;
+  DECLARE cursor_prestamo CURSOR FOR SELECT id_prestamo, monto, tasaInteres FROM Prestamo p WHERE difereciaFechas(NOW(), p.fecha)/365 > anios AND p.monto=mont;
+  DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
-  DECLARE cursor CURSOR FOR SELECT   FROM ;
+  SELECT COUNT(*) INTO cant FROM Prestamo p WHERE difereciaFechas(NOW(), p.fecha)/365 > anios AND p.monto=mont;
+  CREATE TEMPORARY TABLE re (temp_id_prestamo int, temp_monto FLOAT, temp_tasa FLOAT, temp_index int, temp_total int);
 
+  OPEN cursor_solicitud;
+  REPEAT
+    SET i = i + 1;
+    FETCH cursor_prestamo INTO id, mont, tasa;
+    UPDATE Prestamo SET tasaInteres= tasaInteres + add_tasa WHERE id_prestamo=id;
+    INSERT INTO re VALUES (id, mont, tasa, i, cant);
+    
+  UNTIL (fin=1)
+  END REPEAT;
+
+  CLOSE cursor_solicitud;
+  SELECT * FROM re;
+  DROP TEMPORARY TABLE re;
 END //
 DELIMITER;
 
