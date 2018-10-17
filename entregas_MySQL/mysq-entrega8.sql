@@ -116,7 +116,7 @@ CALL aumentarMontoGarantesAncianos();
 -- modificados.
 --MySQL
 DELIMITER //
-CREATE PROCEDURE actualizarPrestamos(IN anios, OUT add_tasa FLOAT, INOUT mont)
+CREATE PROCEDURE actualizarPrestamos(IN anios INT, OUT add_tasa FLOAT, INOUT mont FLOAT)
 BEGIN
   DECLARE id int;
   DECLARE mont FLOAT;
@@ -136,7 +136,7 @@ BEGIN
     FETCH cursor_prestamo INTO id, mont, tasa;
     UPDATE Prestamo SET tasaInteres= tasaInteres + add_tasa WHERE id_prestamo=id;
     INSERT INTO re VALUES (id, mont, tasa, i, cant);
-    
+
   UNTIL (fin=1)
   END REPEAT;
 
@@ -151,3 +151,21 @@ DELIMITER;
     -- 1 - ningún préstamo, al monto total de la solicitud le haga un descuento del 5%.
     -- 2 - 2 o más préstamos, al monto total le haga un descuento del 10%.
     -- 3 - Tres o más préstamos, al monto total le haga un descuento del 15%.
+--MySQL
+DELIMITER //
+CREATE PROCEDURE nuevaSolicitudSelectiva(garante INT, socio INT, monto FLOAT)
+BEGIN
+  DECLARE cant_prestamos INT;
+  DECLARE nuevo_monto FLOAT;
+
+  SELECT COUNT(*) INTO cant_prestamos FROM Prestamo WHERE id_socio=socio;
+
+  CASE cant_prestamos
+    WHEN 0 THEN nuevo_monto = monto - (monto*0.05);
+    WHEN 2 THEN nuevo_monto = monto - (monto*0.1);
+    ELSE nuevo_monto = monto - (monto*0.15);
+  END CASE;
+
+  INSERT INTO Solicitud_prestamo VALUES (garante, socio,NOW(),NULL,NULL,nuevo_monto);
+END //
+DELIMITER;
