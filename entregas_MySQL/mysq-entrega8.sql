@@ -110,37 +110,40 @@ DELIMITER;
 
 CALL aumentarMontoGarantesAncianos();
 
--- e - Realice un procedimiento que posea un parámetro de entrada (cantidad de años),  uno de salida (tasa interés) y dos de entrada/salida
--- (estado, monto), busque aquellos préstamos que hayan iniciado hace más tiempo que la cantidad de años ingresada, posean el mismo estado
--- y monto, y le cambie la tasa de interés a un 5% más de lo que ya tenía. Debe listar el estado, monto, tasa de interés actual y cantidad
+-- e - Realice un procedimiento que posea un parámetro de entrada (cantidad de años),  uno de salida (tasa interés) y uno de entrada/salida
+-- (monto), busque aquellos préstamos que hayan iniciado hace más tiempo que la cantidad de años ingresada, posean el mismo
+-- monto, y le cambie la tasa de interés a un 5% más de lo que ya tenía. Debe listar el monto, tasa de interés actual y cantidad
 -- modificados.
 --MySQL
+DROP PROCEDURE actualizarPrestamos;
+
 DELIMITER //
-CREATE PROCEDURE actualizarPrestamos(IN anios INT, OUT add_tasa FLOAT, INOUT mont FLOAT)
+CREATE PROCEDURE actualizarPrestamos(IN anios INT, OUT add_tasa FLOAT, INOUT mont INT)
 BEGIN
   DECLARE id int;
-  DECLARE mont FLOAT;
+  DECLARE mont INT;
   DECLARE tasa FLOAT;
-  DECLARE i int;
+  DECLARE i int DEFAULT 0;
   DECLARE cant int;
   DECLARE fin int DEFAULT 0;
-  DECLARE cursor_prestamo CURSOR FOR SELECT id_prestamo, monto, tasaInteres FROM Prestamo p WHERE difereciaFechas(NOW(), p.fecha)/365 > anios AND p.monto=mont;
+  DECLARE fechahoy DATE DEFAULT current_date();
+  DECLARE cursor_prestamo CURSOR FOR SELECT id_prestamo, monto, tasaInteres FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=mont;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
-  SELECT COUNT(*) INTO cant FROM Prestamo p WHERE difereciaFechas(NOW(), p.fecha)/365 > anios AND p.monto=mont;
-  CREATE TEMPORARY TABLE re (temp_id_prestamo int, temp_monto FLOAT, temp_tasa FLOAT, temp_index int, temp_total int);
+  SELECT COUNT(*) INTO cant FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=mont;
+  CREATE TEMPORARY TABLE re (temp_id_prestamo int, temp_monto INT, temp_tasa FLOAT, temp_index int, temp_total int);
 
-  OPEN cursor_solicitud;
+  OPEN cursor_prestamo;
   REPEAT
+  	FETCH cursor_prestamo INTO id, mont, tasa;
     SET i = i + 1;
-    FETCH cursor_prestamo INTO id, mont, tasa;
-    UPDATE Prestamo SET tasaInteres= tasaInteres + add_tasa WHERE id_prestamo=id;
-    INSERT INTO re VALUES (id, mont, tasa, i, cant);
+    UPDATE Prestamo SET tasaInteres= tasaInteres + 5 WHERE id_prestamo=id;
+    INSERT INTO re VALUES (id, mont, (tasa+5), i, cant);
 
   UNTIL (fin=1)
   END REPEAT;
 
-  CLOSE cursor_solicitud;
+  CLOSE cursor_prestamo;
   SELECT * FROM re;
   DROP TEMPORARY TABLE re;
 END //
@@ -152,20 +155,25 @@ DELIMITER;
     -- 2 - 2 o más préstamos, al monto total le haga un descuento del 10%.
     -- 3 - Tres o más préstamos, al monto total le haga un descuento del 15%.
 --MySQL
+DROP PROCEDURE nuevaSolicitudSelectiva;
+
 DELIMITER //
-CREATE PROCEDURE nuevaSolicitudSelectiva(garante INT, socio INT, monto FLOAT)
+CREATE PROCEDURE nuevaSolicitudSelectiva(garante INT, socio INT, monto INT)
 BEGIN
   DECLARE cant_prestamos INT;
-  DECLARE nuevo_monto FLOAT;
+  DECLARE nuevo_monto INT;
+  DECLARE fechahoy DATE;
 
-  SELECT COUNT(*) INTO cant_prestamos FROM Prestamo WHERE id_socio=socio;
+  SELECT COUNT(*) INTO cant_prestamos FROM Prestamo p INNER JOIN Solicitud_prestamo s ON s.id_solicitud=p.id_solicitud WHERE id_socio=socio;
+  SELECT current_date() into fechahoy;
 
   CASE cant_prestamos
-    WHEN 0 THEN nuevo_monto = monto - (monto*0.05);
-    WHEN 2 THEN nuevo_monto = monto - (monto*0.1);
-    ELSE nuevo_monto = monto - (monto*0.15);
+    WHEN 0 THEN SET nuevo_monto=monto-(monto*0.05);
+    WHEN 2 THEN SET nuevo_monto=monto-(monto*0.1);
+    ELSE SET nuevo_monto=monto-(monto*0.15);
   END CASE;
 
-  INSERT INTO Solicitud_prestamo VALUES (garante, socio,NOW(),NULL,NULL,nuevo_monto);
+  INSERT INTO Solicitud_prestamo (id_garante, id_socio, fecha, resultado, monto)
+  VALUES (garante, socio, fechahoy, NULL, nuevo_monto);
 END //
 DELIMITER;
