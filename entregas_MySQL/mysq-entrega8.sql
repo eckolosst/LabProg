@@ -177,3 +177,8 @@ BEGIN
   VALUES (garante, socio, fechahoy, NULL, nuevo_monto);
 END //
 DELIMITER;
+
+SET @g=3;
+SET @s=3;
+SET @m=10000;
+CALL nuevaSolicitudSelectiva(@g, @s, @m);

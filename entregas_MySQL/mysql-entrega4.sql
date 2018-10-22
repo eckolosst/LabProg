@@ -60,7 +60,7 @@ FOR EACH ROW
   WHERE NEW.id_garante = Garante.id_garante;
 
 --Inciso d
-CREATE TRIGGER habilitarBorradoSocio BERFORE DELETE ON Socio
+CREATE TRIGGER habilitarBorradoSocio BEFORE DELETE ON Socio
 FOR EACH ROW
 BEGIN
   DELETE FROM Sorteo WHERE OLD.id_socio = Sorteo.id_socio
@@ -70,7 +70,7 @@ BEGIN
   DELETE FROM Cuota_socio WHERE OLD.id_socio = Cuota_socio.id_socio
 END;
 
-CREATE TRIGGER habilitarBorradoSolicitud BERFORE DELETE ON Solicitud_prestamo
+CREATE TRIGGER habilitarBorradoSolicitud1 BEFORE DELETE ON Solicitud_prestamo
 FOR EACH ROW
   DELETE FROM Prestamo WHERE OLD.id_solicitud = Prestamo.id_solicitud;
 
@@ -81,14 +81,19 @@ CREATE TABLE Log_Transaccion(
 );
 
 --Inciso f
-CREATE TRIGGER addLogUp AFTER UPDATE ON *
-FOR EACH STATEMENT
-  INSERT INTO Log_Transaccion (’UPDATE’);
+CREATE TRIGGER addLogUp AFTER UPDATE ON Socio
+FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('UPDATE');
 
-CREATE TRIGGER addLogDe AFTER DELETE ON *
-FOR EACH STATEMENT
-  INSERT INTO Log_Transaccion (’DELETE’);
+UPDATE Socio SET numero_socio=130 WHERE id_socio=5;
 
-CREATE TRIGGER addLogIN AFTER INSERT ON *
-FOR EACH STATEMENT
-  INSERT INTO Log_Transaccion (’INSERT’);
+CREATE TRIGGER addLogDe AFTER DELETE ON Socio
+FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('DELETE');
+
+CREATE TRIGGER addLogIN AFTER INSERT ON Socio
+FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('INSERT');
+
+--Inciso g
+--MySQL
+CREATE TRIGGER impedirBorrado BEFORE DELETE ON Cuota
+FOR EACH ROW
+signal sqlstate '45000' set message_text = 'Prohibido eliminar registros de Cuota';
