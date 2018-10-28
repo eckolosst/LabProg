@@ -117,6 +117,10 @@ CALL aumentarMontoGarantesAncianos();
 --MySQL
 DROP PROCEDURE actualizarPrestamos;
 
+SET @a=6;
+SET @m=10000;
+CALL actualizarPrestamos(@a,@t,@m);
+
 DELIMITER //
 CREATE PROCEDURE actualizarPrestamos(IN anios INT, OUT add_tasa FLOAT, INOUT mont INT)
 BEGIN
@@ -127,19 +131,21 @@ BEGIN
   DECLARE cant int;
   DECLARE fin int DEFAULT 0;
   DECLARE fechahoy DATE DEFAULT current_date();
-  DECLARE cursor_prestamo CURSOR FOR SELECT id_prestamo, monto, tasaInteres FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=mont;
+  DECLARE cursor_prestamo CURSOR FOR SELECT id_prestamo, monto, tasaInteres FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=inMont;
   DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin=1;
 
-  SELECT COUNT(*) INTO cant FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=mont;
+  SELECT COUNT(*) INTO cant FROM Prestamo p WHERE difereciaFechas(fechahoy, p.fecha)/365 > anios AND p.monto=inMont;
   CREATE TEMPORARY TABLE re (temp_id_prestamo int, temp_monto INT, temp_tasa FLOAT, temp_index int, temp_total int);
 
   OPEN cursor_prestamo;
   REPEAT
   	FETCH cursor_prestamo INTO id, mont, tasa;
-    SET i = i + 1;
-    UPDATE Prestamo SET tasaInteres= tasaInteres + 5 WHERE id_prestamo=id;
-    INSERT INTO re VALUES (id, mont, (tasa+5), i, cant);
-
+    IF (i<cant) THEN
+      SET i = i + 1;
+      UPDATE Prestamo SET tasaInteres= tasaInteres + 5 WHERE id_prestamo=id;
+      SET add_tasa = tasa + 5;
+      INSERT INTO re VALUES (id, mont, tasa, i, cant);
+    END IF;
   UNTIL (fin=1)
   END REPEAT;
 
