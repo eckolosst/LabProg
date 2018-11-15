@@ -93,7 +93,7 @@ CREATE TABLE Efectivo(
   id_pago int AUTO_INCREMENT,
   id_cuota int,
   monto FLOAT,
-  fechaVencimiento DATE,
+  fecha DATE,
   FOREIGN KEY (id_cuota) REFERENCES Cuota(id_cuota) on update cascade on delete restrict,
   PRIMARY KEY(id_pago,id_cuota));
 
@@ -101,7 +101,7 @@ CREATE TABLE Transferencia(
   id_pago int AUTO_INCREMENT,
   id_cuota int,
   monto FLOAT,
-  fechaVencimiento DATE,
+  fecha DATE,
   cuenta_origen int,
   nro_transaccion int,
   FOREIGN KEY (id_cuota) REFERENCES Cuota(id_cuota) on update cascade on delete restrict,
@@ -111,7 +111,7 @@ CREATE TABLE Tarjeta(
   id_pago int AUTO_INCREMENT,
   id_cuota int,
   monto FLOAT,
-  fechaVencimiento DATE,
+  fecha DATE,
   nro_tarjeta int,
   banco varchar(30),
   titular varchar(30),

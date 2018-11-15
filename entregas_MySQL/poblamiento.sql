@@ -31,15 +31,29 @@ insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc,
 insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Rosabelle', 'Test', '1990-07-15', 'divorciado', 'LE', '74980888', '2289 Brentwood Parkway', 'rtest19@ezinearticles.com', 'Recruiting Manager', 'Realmix', 8309569);
 insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Anette', 'Glinde', '1990-03-16', 'soltero', 'DNI', '3010363', '2587 5th Drive', 'aglinde1a@reverbnation.com', 'Graphic Designer', 'Realcube', 2497436);
 insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Antonius', 'Spradbery', '1985-11-12', 'divorciado', 'DNI', '7523337', '786 Mallory Street', 'aspradbery1d@liveinternet.ru', 'Geologist I', 'Jaxspan', 4995168);
+insert into Periodo_afiliacion(id_socio, id_periodo) values (2,1);
 
 insert into Socio (tipo_doc, nro_doc, numero_socio) values ('DNI', '98871944', 123);
 insert into Socio (tipo_doc, nro_doc, numero_socio) values ('DNI', '19851659', 124);
 insert into Socio (tipo_doc, nro_doc, numero_socio) values ('DNI', '3091746', 125);
 insert into Socio (tipo_doc, nro_doc, numero_socio) values ('DNI', '90874350', 126);
 insert into Socio (tipo_doc, nro_doc, numero_socio) values ('LC', '9320052', 127);
-insert into Periodo_afiliacion(id_socio, id_periodo) values (2,1);
+
 insert into Cuota (id_cuota, capital, interes) values (1, 12000, 10);
 insert into Cuota_socio (id_cuota, id_socio) values (1,2);
+
+insert into Cuota (id_cuota, capital, interes, vencimiento) values (2, 4000, 500, '2018-01-02');
+insert into Cuota (id_cuota, capital, interes, vencimiento) values (3, 4000, 500, '2018-01-03');
+insert into Cuota (id_cuota, capital, interes, vencimiento) values (4, 4000, 500, '2018-01-04');
+insert into Cuota (id_cuota, capital, interes, vencimiento) values (5, 4000, 500, '2018-01-05');
+insert into Cuota (id_cuota, capital, interes, vencimiento) values (6, 4000, 500, '2018-01-06');
+
+insert into Cuota_socio (id_cuota, id_socio) values (2,2);
+insert into Cuota_socio (id_cuota, id_socio) values (3,2);
+insert into Cuota_socio (id_cuota, id_socio) values (4,2);
+insert into Cuota_socio (id_cuota, id_socio) values (5,2);
+insert into Cuota_socio (id_cuota, id_socio) values (6,2);
+
 insert into Efectivo (id_pago, id_cuota, monto) values (1,1, 12000);
 
 insert into Garante (id_garante, tipo_doc, nro_doc) values ('DNI', '50049189');
@@ -47,23 +61,3 @@ insert into Garante (id_garante, tipo_doc, nro_doc) values ('DNI', '87395519');
 insert into Garante (id_garante, tipo_doc, nro_doc) values ('DNI', '80575331');
 insert into Garante (id_garante, tipo_doc, nro_doc) values ('CI', '17038863');
 insert into Garante (id_garante, tipo_doc, nro_doc) values ('DNI', '08215670');
-
-
--- ESTAS NO CARGAN POR NO RESPETAR LAS RESTRICCIONES----------------------------
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Andy', 'Bratton', '1990-03-21', 'viudo', 'LC', '9694242', '62 Monument Trail', 'abratton1c@omniture.com', 'Quality Control Specialist', 'Zooxo', 2193985);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Gilli', 'Melley', '1985-11-29', 'casado', 'LC', '1584092', '28736 Steensland Crossing', 'gmelley1b@github.com', 'Accounting Assistant IV', 'Skimia', 9591908);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Denver', 'Itzkovitch', '1990-08-22', 'viudo', 'DNI', '2890803', '8 Stang Crossing', 'ditzkovitch17@nyu.edu', 'Information Systems Manager', 'Centizu', 8648783);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Nettle', 'Blankhorn', '1985-10-18', 'soltero', 'DNI', '4866543', '0384 Vidon Point', 'nblankhorn18@artisteer.com', 'Database Administrator II', 'Mybuzz', 3517584);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Hillie', 'Goslin', '1990-03-13', 'soltero', 'LE', '56908202', '49096 Onsgard Trail', 'hgosliny@quantcast.com', 'Chief Design Engineer', 'Kazu', 9902904);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Josey', 'Henriquet', '1990-01-14', 'divorciado', 'DNI', '70078552', '5892 Stephen Court', 'jhenriquetu@reddit.com', 'VP Product Management', 'Gigabox', 7719435);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Leon', 'Soloway', '1990-02-17', 'soltero', 'LC', '15744236', '16 Mayfield Drive', 'lsoloway3@jalbum.net', 'Mechanical Systems Engineer', 'Divavu', 8228196);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Sloan', 'Dunbobin', '1990-05-11', 'casado', 'DNI', '6073016', '83 Petterle Trail', 'sdunbobin6@e-recht24.de', 'Accounting Assistant IV', 'Oloo', 3354563);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Gare', 'Delagua', '1990-03-23', 'soltero', 'DNI', '16421862', '22 Esker Pass', 'gdelagua8@woothemes.com', 'Structural Analysis Engineer', 'Latz', 8003569);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Tulley', 'Larkin', '1990-03-27', 'viudo', 'DNI', '35108971', '6940 Graceland Point', 'tlarkina@china.com.cn', 'Registered Nurse', 'Browseblab', 7216411);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Jason', 'Sinfield', '1990-07-07', 'soltero', 'CI', '2487015', '4 Melvin Point', 'jsinfieldi@icq.com', 'Senior Financial Analyst', 'Zoomzone', 4356934);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Joy', 'Po', '1990-01-02', 'viudo', 'LE', '47012656', '3 Ronald Regan Terrace', 'jpok@nhs.uk', 'Analog Circuit Design manager', 'Oyoyo', 9219882);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Rachele', 'Potten', '1990-07-27', 'casado', 'LE', '76778626', '13 Kenwood Court', 'rpottenm@jimdo.com', 'Budget/Accounting Analyst III', 'Riffpath', 8553798);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Birgit', 'Dickson', '1990-01-05', 'casado', 'LE', '96176593', '54630 Hermina Park', 'bdicksonn@arizona.edu', 'Nuclear Power Engineer', 'Youspan', 3103456);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Winnie', 'Dikles', '1985-09-24', 'divorciado', 'CI', '34532521', '97 Arizona Trail', 'wdikleso@theatlantic.com', 'Desktop Support Technician', 'Skaboo', 2135569);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Kimmi', 'Lobell', '1985-10-26', 'soltero', 'DNI', '1573206', '56 Coolidge Hill', 'klobellp@pen.io', 'Senior Financial Analyst', 'Chatterpoint', 9774711);
-insert into Persona (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono) values ('Adoree', 'Lettuce', '1990-03-07', 'divorciado', 'CI', '6955524', '66037 Schurz Drive', 'alettucer@networkadvertising.org', 'Analog Circuit Design manager', 'Yoveo', 2833374);

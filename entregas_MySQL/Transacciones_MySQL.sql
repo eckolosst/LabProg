@@ -73,9 +73,9 @@ ROLLBACK;
 START TRANSACTION;
 INSERT INTO Prestamo(id_solicitud, id_tabla_referencia, fecha, tasaInteres, monto) VALUES
   (6, 1, '2018-10-22', 1, 20000);
-SAVEPOINT insert1;
-INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (?, 5000, '2018-12-15');
+-- SAVEPOINT insert1;
+-- INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (?, 5000, '2018-12-15');
 SAVEPOINT insert2;
-INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (?, 3000, '2018-09-15');
-INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (?, 3000, '2018-10-15');
+INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (2, 3000, '2018-10-02');
+INSERT INTO Efectivo(id_cuota, monto, fechaVencimiento) VALUES (3, 3000, '2018-10-03');
 COMMIT;

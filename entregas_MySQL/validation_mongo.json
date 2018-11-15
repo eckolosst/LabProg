@@ -1,0 +1,283 @@
+//Prestamo
+
+//Solicitud
+
+//Garante
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["id_garante", "tipo_doc", "nro_doc", "nombre", "apellido", "email"],
+      properties: {
+         id_garante: {
+            bsonType: "int",
+            description: "",
+            minimum: 0
+         },
+         tipo_doc: {
+            bsonType: "string",
+            description: "",
+            maxLength: 4
+         },
+         nro_doc: {
+            bsonType: "int",
+            description: ""
+         },
+         nombre: {
+            bsonType: "string",
+            description: ""
+         },
+         apellido:{
+            bsonType: "string",
+            description: ""
+         },
+         email:{
+            bsonType: "string",
+            description: ""
+         },
+         fecha_nacimiento:{
+           bsonType: "date",
+            description: "" 
+         },
+         estado_civil:{
+            enum: ["casade","soltere","viude","ahre"],
+            description: "" 
+         },
+         domicilio: {
+            bsonType: "string",
+            description: ""
+         },
+         profesion: {
+            bsonType: "string",
+            description: ""
+         },
+         empresa: {
+            bsonType: "string",
+            description: ""
+         },
+         telefono: {
+            bsonType: "int",
+            description: ""
+         }
+      }
+   }
+}
+
+//Sorteo
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["socio"],
+      properties: {
+         socio: {
+            bsonType: "object",
+            required: ["id_socio", "nombre", "apellido", "email", "telefono"],
+            properties: {
+               id_socio: {
+                  bsonType: "int",
+                  description: "",
+                  minimum: 0
+               },
+               nombre: {
+                  bsonType: "string",
+                  description: ""
+               },
+               apellido:{
+                  bsonType: "string",
+                  description: ""
+               },
+               email:{
+                  bsonType: "string",
+                  description: ""
+               },
+               telefono: {
+                  bsonType: "int",
+                  description: ""
+               }
+            }
+         }
+      }
+   }
+}
+
+//Socio
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["id_socio", "tipo_doc", "nro_doc", "nombre", "apellido", "email", "numero_socio"],
+      properties: {
+         id_socio: {
+            bsonType: "int",
+            description: "",
+            minimum: 0
+         },
+         tipo_doc: {
+            bsonType: "string",
+            description: "",
+            maxLength: 4
+         },
+         nro_doc: {
+            bsonType: "int",
+            description: ""
+         },
+         nombre: {
+            bsonType: "string",
+            description: ""
+         },
+         apellido:{
+            bsonType: "string",
+            description: ""
+         },
+         email:{
+            bsonType: "string",
+            description: ""
+         },
+         numero_socio:{
+            bsonType: "int",
+            description: ""
+         },
+         fecha_nacimiento:{
+           bsonType: "date",
+            description: "" 
+         },
+         estado_civil:{
+            enum: ["casade","soltere","viude","ahre"],
+            description: "" 
+         },
+         domicilio: {
+            bsonType: "string",
+            description: ""
+         },
+         profesion: {
+            bsonType: "string",
+            description: ""
+         },
+         empresa: {
+            bsonType: "string",
+            description: ""
+         },
+         telefono: {
+            bsonType: "int",
+            description: ""
+         },
+         cuota: {
+            bsonType: "object",
+            required: ["id_cuota","estado"],
+            properties: {
+               id_cuota: {
+                  bsonType: "int",
+                  description: ""
+               },
+               estado: {
+                  bsonType: "date",
+                  description: ""
+               }
+            }
+         },
+         periodo_afiliacion: {
+            bsonType: "object",
+            required: ["fecha_alta","fecha_baja"],
+            properties: {
+               fecha_alta: {
+                  bsonType: "date",
+                  description: ""
+               },
+               fecha_baja: {
+                  bsonType: "date",
+                  description: ""
+               }
+            }
+         }
+      }
+   }
+}
+
+//Cuota
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["id_cuota", "fecha_vencimiento", "estado", "interes"],
+      properties: {
+         id_cuota: {
+            bsonType: "int",
+            description: "",
+            minimum: 0
+         },
+         fecha_vencimiento: {
+            bsonType: "date",
+            description: ""
+         },
+         estado: {
+            enum: ["paga","inpaga"],
+            description: ""
+         },
+         interes:{
+            bsonType: "int",
+            description: "",
+            minimum: 0,
+            maximum: 60
+         },
+         transferencia: {
+            bsonType: "object",
+            required: ["monto","fecha","cuenta_origen","nro_transaccion"],
+            properties: {
+               monto: {
+                  bsonType: "int",
+                  description: ""
+               },
+               fecha: {
+                  bsonType: "date",
+                  description: ""
+               },
+               cuenta_origen: {
+                  bsonType: "string",
+                  description: ""
+               },
+               nro_transaccion: {
+                  bsonType: "string",
+                  description: ""
+               }
+            }
+         },
+         tarjeta: {
+            bsonType: "object",
+            required: ["monto","fecha","nro_tarjeta","banco","titular"],
+            properties: {
+               monto: {
+                  bsonType: "int",
+                  description: ""
+               },
+               fecha: {
+                  bsonType: "date",
+                  description: ""
+               },
+               nro_tarjeta: {
+                  bsonType: "string",
+                  description: ""
+               },
+               banco: {
+                  bsonType: "string",
+                  description: ""
+               },
+               titular: {
+                  bsonType: "string",
+                  description: ""
+               }
+            }
+         },
+         efectivo: {
+            bsonType: "object",
+            required: ["monto","fecha"],
+            properties: {
+               monto: {
+                  bsonType: "int",
+                  description: ""
+               },
+               fecha: {
+                  bsonType: "date",
+                  description: ""
+               }
+            }
+         }
+      }
+   }
+}

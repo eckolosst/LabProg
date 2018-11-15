@@ -82,18 +82,37 @@ CREATE TABLE Log_Transaccion(
 
 --Inciso f
 CREATE TRIGGER addLogUp AFTER UPDATE ON Socio
-FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('UPDATE');
+FOR EACH ROW INSERT INTO Log_Transaccion (operacion) VALUES ('UPDATEA');
 
 UPDATE Socio SET numero_socio=130 WHERE id_socio=5;
 
 CREATE TRIGGER addLogDe AFTER DELETE ON Socio
-FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('DELETE');
+FOR EACH ROW INSERT INTO Log_Transaccion (operacion) VALUES ('DELETEA');
 
 CREATE TRIGGER addLogIN AFTER INSERT ON Socio
-FOR EACH ROW INSERT INTO Log_Transaccion VALUES ('INSERT');
+FOR EACH ROW INSERT INTO Log_Transaccion (operacion) VALUES ('INSERTEA');
 
 --Inciso g
 --MySQL
-CREATE TRIGGER impedirBorrado BEFORE DELETE ON Cuota
+DELIMITER  //
+CREATE TRIGGER especializacionCuotaSocio BEFORE INSERT ON Cuota_socio
 FOR EACH ROW
-signal sqlstate '45000' set message_text = 'Prohibido eliminar registros de Cuota';
+BEGIN
+  IF (NEW.id_cuota NOT IN(SELECT id_cuota FROM Cuota))
+    THEN signal sqlstate '45000' set message_text = 'No existe una cuota con ese id';
+  END IF;
+  IF EXISTS (SELECT 1 FROM Cuota_prestamo WHERE (NEW.id_cuota = id_cuota))
+      THEN signal sqlstate '45000' set message_text = 'Ya existe una cuota de prestamo con ese id';
+   END IF;
+END //;
+
+CREATE TRIGGER especializacionCuotaPrestamo BEFORE INSERT ON Cuota_prestamo
+FOR EACH ROW
+BEGIN
+  IF (NEW.id_cuota NOT IN(SELECT id_cuota FROM Cuota))
+    THEN signal sqlstate '45000' set message_text = 'No existe una cuota con ese id';
+  END IF;
+  IF EXISTS (SELECT 1 FROM Cuota_socio WHERE (NEW.id_cuota = id_cuota))
+    THEN signal sqlstate '45000' set message_text = 'Ya existe una cuota de socio con ese id';
+  END IF;
+END //;
