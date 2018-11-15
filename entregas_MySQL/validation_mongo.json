@@ -1,6 +1,188 @@
 //Prestamo
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["tasa_interes", "monto", "t_referencia", "solicitud" ],
+      properties: {
+         tasa_interes: {
+            bsonType: "double",
+            description: "",
+         },
+         monto: {
+            bsonType: "int",
+            description: ""
+         },
+         t_referencia: {
+            bsonType: "object",
+            required: ["fecha_vigencia", "monto_max", "interes_por_nora"],
+            properties: {
+               fecha_vigencia: {
+                  bsonType: "date",
+                  description: ""
+               },
+               monto_max: {
+                  bsonType: "double",
+                  description: ""
+               },
+               interes_por_nora:{
+                  bsonType: "double",
+                  description: ""
+               }
+            }
+         },
+         solicitud: {
+            bsonType: "object",
+            required: ["id_solicitud", "fecha", "monto"],
+            properties: {
+               id_solicitud: {
+                  bsonType: "int",
+                  description: "",
+                  minimum:0
+               },
+               fecha: {
+                  bsonType: "date",
+                  description: ""
+               },
+               interes_por_nora:{
+                  bsonType: "double",
+                  description: ""
+               }
+            }
+         },
+         cuota: {
+            bsonType: "object",
+            required: ["id_cuota","estado"],
+            properties: {
+               id_cuota: {
+                  bsonType: "int",
+                  description: ""
+               },
+               estado: {
+                  enum: ["paga","inpaga"],
+                  description: ""
+               }
+            }
+         }
+      }
+   }
+}
 
 //Solicitud
+{
+   $jsonSchema:{
+      bsonType: "object",
+      required: ["id_solicitud", "fecha", "resultado", "monto"],
+      properties: {
+         id_solicitud: {
+            bsonType: "int",
+            description: "",
+            minimum: 0
+         },
+         fecha: {
+            bsonType: "date",
+            description: ""
+         },
+         resultado: {
+            enum: ["aprobada", "desaprobada"],
+            description: ""
+         },
+         monto: {
+            bsonType: "int",
+            description: ""
+         },
+         socio: {
+            bsonType: "object",
+            required: ["id_socio", "nombre", "apellido", "email", "telefono", "emresa"],
+            properties: {
+               id_socio: {
+                  bsonType: "int",
+                  description: "",
+                  minimum: 0
+               },
+               nombre: {
+                  bsonType: "string",
+                  description: ""
+               },
+               apellido:{
+                  bsonType: "string",
+                  description: ""
+               },
+               email:{
+                  bsonType: "string",
+                  description: ""
+               },
+               telefono: {
+                  bsonType: "int",
+                  description: ""
+               },
+               empresa: {
+                  bsonType: "string",
+                  description: ""
+               },
+               recibos_sueldo: {
+                  bsonType: "object",
+                  required: ["fecha", "monto"],
+                  properties: {
+                     fecha: {
+                        bsonType: "date",
+                        description: "",
+                      },
+                      monto: {
+                         bsonType: "double",
+                         description: "",
+                       }
+                  }
+               }
+            }
+         },
+         garante: {
+            bsonType: "object",
+            required: ["id_garante", "nombre", "apellido", "email", "telefono", "emresa"],
+            properties: {
+               id_garante: {
+                  bsonType: "int",
+                  description: "",
+                  minimum: 0
+               },
+               nombre: {
+                  bsonType: "string",
+                  description: ""
+               },
+               apellido:{
+                  bsonType: "string",
+                  description: ""
+               },
+               email:{
+                  bsonType: "string",
+                  description: ""
+               },
+               telefono: {
+                  bsonType: "int",
+                  description: ""
+               },
+               empresa: {
+                  bsonType: "string",
+                  description: ""
+               },
+               recibos_sueldo: {
+                  bsonType: "object",
+                  required: ["fecha", "monto"],
+                  properties: {
+                    fecha: {
+                      bsonType: "date",
+                      description: "",
+                    },
+                    monto: {
+                       bsonType: "double",
+                       description: "",
+                     }
+                  }
+               }
+            }
+         }
+      }
+   }
+}
 
 //Garante
 {
@@ -36,11 +218,11 @@
          },
          fecha_nacimiento:{
            bsonType: "date",
-            description: "" 
+            description: ""
          },
          estado_civil:{
             enum: ["casade","soltere","viude","ahre"],
-            description: "" 
+            description: ""
          },
          domicilio: {
             bsonType: "string",
@@ -137,11 +319,11 @@
          },
          fecha_nacimiento:{
            bsonType: "date",
-            description: "" 
+            description: ""
          },
          estado_civil:{
             enum: ["casade","soltere","viude","ahre"],
-            description: "" 
+            description: ""
          },
          domicilio: {
             bsonType: "string",
@@ -168,7 +350,7 @@
                   description: ""
                },
                estado: {
-                  bsonType: "date",
+                  enum: ["paga","inpaga"],
                   description: ""
                }
             }
