@@ -49,19 +49,24 @@
                }
             }
          },
-         cuota: {
-            bsonType: "object",
-            required: ["id_cuota","estado"],
-            properties: {
-               id_cuota: {
-                  bsonType: "int",
-                  description: ""
-               },
-               estado: {
-                  enum: ["paga","inpaga"],
-                  description: ""
-               }
-            }
+         cuotas: {
+           bsonType: "array"
+           items: {
+             cuota: {
+                bsonType: "object",
+                required: ["id_cuota","estado"],
+                properties: {
+                   id_cuota: {
+                      bsonType: "int",
+                      description: ""
+                   },
+                   estado: {
+                      enum: ["paga","inpaga"],
+                      description: ""
+                   }
+                }
+             }
+           }
          }
       }
    }
@@ -341,19 +346,24 @@
             bsonType: "int",
             description: ""
          },
-         cuota: {
-            bsonType: "object",
-            required: ["id_cuota","estado"],
-            properties: {
-               id_cuota: {
-                  bsonType: "int",
-                  description: ""
-               },
-               estado: {
-                  enum: ["paga","inpaga"],
-                  description: ""
-               }
-            }
+         cuotas: {
+           bsonType: "array"
+           items: {
+             cuota: {
+                bsonType: "object",
+                required: ["id_cuota","estado"],
+                properties: {
+                   id_cuota: {
+                      bsonType: "int",
+                      description: ""
+                   },
+                   estado: {
+                      enum: ["paga","inpaga"],
+                      description: ""
+                   }
+                }
+             }
+           }
          },
          periodo_afiliacion: {
             bsonType: "object",
@@ -398,67 +408,82 @@
             minimum: 0,
             maximum: 60
          },
-         transferencia: {
-            bsonType: "object",
-            required: ["monto","fecha","cuenta_origen","nro_transaccion"],
-            properties: {
-               monto: {
-                  bsonType: "int",
-                  description: ""
-               },
-               fecha: {
-                  bsonType: "date",
-                  description: ""
-               },
-               cuenta_origen: {
-                  bsonType: "string",
-                  description: ""
-               },
-               nro_transaccion: {
-                  bsonType: "string",
-                  description: ""
-               }
-            }
+         transferencias: {
+           bsonType: "array"
+           items: {
+             transferencia: {
+                bsonType: "object",
+                required: ["monto","fecha","cuenta_origen","nro_transaccion"],
+                properties: {
+                   monto: {
+                      bsonType: "int",
+                      description: ""
+                   },
+                   fecha: {
+                      bsonType: "date",
+                      description: ""
+                   },
+                   cuenta_origen: {
+                      bsonType: "string",
+                      description: ""
+                   },
+                   nro_transaccion: {
+                      bsonType: "string",
+                      description: ""
+                   }
+                }
+             }
+           }
          },
-         tarjeta: {
-            bsonType: "object",
-            required: ["monto","fecha","nro_tarjeta","banco","titular"],
-            properties: {
-               monto: {
-                  bsonType: "int",
-                  description: ""
-               },
-               fecha: {
-                  bsonType: "date",
-                  description: ""
-               },
-               nro_tarjeta: {
-                  bsonType: "string",
-                  description: ""
-               },
-               banco: {
-                  bsonType: "string",
-                  description: ""
-               },
-               titular: {
-                  bsonType: "string",
-                  description: ""
-               }
-            }
+         tarjetas: {
+           bsonType: "array"
+           items: {
+             tarjeta: {
+                bsonType: "object",
+                required: ["monto","fecha","nro_tarjeta","banco","titular"],
+                properties: {
+                   monto: {
+                      bsonType: "int",
+                      description: ""
+                   },
+                   fecha: {
+                      bsonType: "date",
+                      description: ""
+                   },
+                   nro_tarjeta: {
+                      bsonType: "string",
+                      description: ""
+                   },
+                   banco: {
+                      bsonType: "string",
+                      description: ""
+                   },
+                   titular: {
+                      bsonType: "string",
+                      description: ""
+                   }
+                }
+             }
+           }
          },
-         efectivo: {
-            bsonType: "object",
-            required: ["monto","fecha"],
-            properties: {
-               monto: {
-                  bsonType: "int",
-                  description: ""
-               },
-               fecha: {
-                  bsonType: "date",
-                  description: ""
-               }
-            }
+         efectivos: {
+           bsonType: "array"
+           items: {
+             efectivo: {
+                bsonType: "object",
+                required: ["monto","fecha"],
+                properties: {
+                   monto: {
+                      bsonType: "int",
+                      description: ""
+                   },
+                   fecha: {
+                      bsonType: "date",
+                      description: ""
+                   }
+                }
+             }
+           }
          }
       }
    }
