@@ -1,58 +1,57 @@
 //Prestamo
-{
-   $jsonSchema:{
-      bsonType: "object",
-      required: ["tasa_interes", "monto", "t_referencia", "solicitud" ],
-      properties: {
-         tasa_interes: {
-            bsonType: "double",
-            description: ""
-         },
-         monto: {
-            bsonType: "int",
-            description: ""
-         },
-         t_referencia: {
-            bsonType: "object",
-            required: ["fecha_vigencia", "monto_max", "interes_por_nora"],
-            properties: {
-               fecha_vigencia: {
-                  bsonType: "date",
-                  description: ""
-               },
-               monto_max: {
-                  bsonType: "double",
-                  description: ""
-               },
-               interes_por_nora:{
-                  bsonType: "double",
-                  description: ""
+   {
+      $jsonSchema:{
+         bsonType: "object",
+         required: ["tasa_interes", "monto", "t_referencia", "solicitud" ],
+         properties: {
+            tasa_interes: {
+               bsonType: "double",
+               description: ""
+            },
+            monto: {
+               bsonType: "int",
+               description: ""
+            },
+            t_referencia: {
+               bsonType: "object",
+               required: ["fecha_vigencia", "monto_max", "interes_por_nora"],
+               properties: {
+                  fecha_vigencia: {
+                     bsonType: "date",
+                     description: ""
+                  },
+                  monto_max: {
+                     bsonType: "double",
+                     description: ""
+                  },
+                  interes_por_nora:{
+                     bsonType: "double",
+                     description: ""
+                  }
                }
-            }
-         },
-         solicitud: {
-            bsonType: "object",
-            required: ["id_solicitud", "fecha", "monto"],
-            properties: {
-               id_solicitud: {
-                  bsonType: "int",
-                  description: "",
-                  minimum:0
-               },
-               fecha: {
-                  bsonType: "date",
-                  description: ""
-               },
-               interes_por_nora:{
-                  bsonType: "double",
-                  description: ""
+            },
+            solicitud: {
+               bsonType: "object",
+               required: ["id_solicitud", "fecha", "monto"],
+               properties: {
+                  id_solicitud: {
+                     bsonType: "int",
+                     description: "",
+                     minimum:0
+                  },
+                  fecha: {
+                     bsonType: "date",
+                     description: ""
+                  },
+                  interes_por_nora:{
+                     bsonType: "double",
+                     description: ""
+                  }
                }
-            }
-         },
-         cuotas: {
-           bsonType: "array"
-           items: {
-             cuota: {
+            },
+            cuotas: {
+              bsonType: "array",
+              items: {
                 bsonType: "object",
                 required: ["id_cuota","estado"],
                 properties: {
@@ -65,12 +64,11 @@
                       description: ""
                    }
                 }
-             }
-           }
+              }
+            }
          }
       }
    }
-}
 
 //Solicitud
 {
@@ -347,20 +345,18 @@
             description: ""
          },
          cuotas: {
-           bsonType: "array"
+           bsonType: "array",
            items: {
-             cuota: {
-                bsonType: "object",
-                required: ["id_cuota","estado"],
-                properties: {
-                   id_cuota: {
-                      bsonType: "int",
-                      description: ""
-                   },
-                   estado: {
-                      enum: ["paga","inpaga"],
-                      description: ""
-                   }
+             bsonType: "object",
+             required: ["id_cuota","estado"],
+             properties: {
+                id_cuota: {
+                   bsonType: "int",
+                   description: ""
+                },
+                estado: {
+                   enum: ["paga","inpaga"],
+                   description: ""
                 }
              }
            }
@@ -409,78 +405,72 @@
             maximum: 60
          },
          transferencias: {
-           bsonType: "array"
+           bsonType: "array",
            items: {
-             transferencia: {
-                bsonType: "object",
-                required: ["monto","fecha","cuenta_origen","nro_transaccion"],
-                properties: {
-                   monto: {
-                      bsonType: "int",
-                      description: ""
-                   },
-                   fecha: {
-                      bsonType: "date",
-                      description: ""
-                   },
-                   cuenta_origen: {
-                      bsonType: "string",
-                      description: ""
-                   },
-                   nro_transaccion: {
-                      bsonType: "string",
-                      description: ""
-                   }
+             bsonType: "object",
+             required: ["monto","fecha","cuenta_origen","nro_transaccion"],
+             properties: {
+                monto: {
+                   bsonType: "int",
+                   description: ""
+                },
+                fecha: {
+                   bsonType: "date",
+                   description: ""
+                },
+                cuenta_origen: {
+                   bsonType: "string",
+                   description: ""
+                },
+                nro_transaccion: {
+                   bsonType: "string",
+                   description: ""
                 }
              }
            }
          },
          tarjetas: {
-           bsonType: "array"
+           bsonType: "array",
            items: {
-             tarjeta: {
-                bsonType: "object",
-                required: ["monto","fecha","nro_tarjeta","banco","titular"],
-                properties: {
-                   monto: {
-                      bsonType: "int",
-                      description: ""
-                   },
-                   fecha: {
-                      bsonType: "date",
-                      description: ""
-                   },
-                   nro_tarjeta: {
-                      bsonType: "string",
-                      description: ""
-                   },
-                   banco: {
-                      bsonType: "string",
-                      description: ""
-                   },
-                   titular: {
-                      bsonType: "string",
-                      description: ""
-                   }
+             bsonType: "object",
+             required: ["monto","fecha","nro_tarjeta","banco","titular"],
+             properties: {
+                monto: {
+                   bsonType: "int",
+                   description: ""
+                },
+                fecha: {
+                   bsonType: "date",
+                   description: ""
+                },
+                nro_tarjeta: {
+                   bsonType: "string",
+                   description: ""
+                },
+                banco: {
+                   bsonType: "string",
+                   description: ""
+                },
+                titular: {
+                   bsonType: "string",
+                   description: ""
                 }
              }
            }
          },
          efectivos: {
-           bsonType: "array"
+           bsonType: "array",
            items: {
-             efectivo: {
-                bsonType: "object",
-                required: ["monto","fecha"],
-                properties: {
-                   monto: {
-                      bsonType: "int",
-                      description: ""
-                   },
-                   fecha: {
-                      bsonType: "date",
-                      description: ""
-                   }
+             bsonType: "object",
+             required: ["monto","fecha"],
+             properties: {
+                monto: {
+                   bsonType: "int",
+                   description: ""
+                },
+                fecha: {
+                   bsonType: "date",
+                   description: ""
                 }
              }
            }
