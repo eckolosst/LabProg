@@ -6,7 +6,7 @@
       properties: {
          tasa_interes: {
             bsonType: "double",
-            description: "",
+            description: ""
          },
          monto: {
             bsonType: "int",
@@ -125,11 +125,11 @@
                   properties: {
                      fecha: {
                         bsonType: "date",
-                        description: "",
+                        description: ""
                       },
                       monto: {
                          bsonType: "double",
-                         description: "",
+                         description: ""
                        }
                   }
                }
@@ -170,11 +170,11 @@
                   properties: {
                     fecha: {
                       bsonType: "date",
-                      description: "",
+                      description: ""
                     },
                     monto: {
                        bsonType: "double",
-                       description: "",
+                       description: ""
                      }
                   }
                }
