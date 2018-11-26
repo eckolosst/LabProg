@@ -1,6 +1,6 @@
 -- POBLAMIENTO PERSONAS
 insert into Persona
-    (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nroDocumento, domicilio, email, profesion, empresa, telefono)
+    (nombre, apellido, fecha_nacimiento, estado_civil, tipo_doc, nro_doc, domicilio, email, profesion, empresa, telefono)
 values
     ('Joe', 'Breheny', '1990-06-16', 'soltero', 'DNI', '98871944', '370 Lindbergh Alley', 'jbreheny0@discovery.com', 'Assistant Professor', 'Viva', 4227365),
     ('Shaughn', 'Lawdham', '1990-06-03', 'casado', 'DNI', '19851659', '085 Sachtjen Pass', 'slawdham1@cyberchimps.com', 'Marketing Manager', 'Kazu', 1713321),
@@ -185,11 +185,11 @@ values
 
 insert into Prestamo (id_solicitud,id_tabla_referencia,fecha,tasaInteres,monto)
 values
-(1,1,'2018-11-19',10,100),
-(2,2,'2018-10-19',12,600),
-(3,3,'2018-09-19',14,700),
-(4,1,'2018-08-19',15,800),
-(5,2,'2018-12-19',25,900);
+  (1,1,'2018-11-19',10,100),
+  (2,2,'2018-10-19',12,600),
+  (3,3,'2018-09-19',14,700),
+  (4,1,'2018-08-19',15,800),
+  (5,2,'2018-12-19',25,900);
 
 insert into Cuota_prestamo
     (id_cuota, id_prestamo)
@@ -208,7 +208,7 @@ values
 INSERT INTO Sorteo
 ( id_socio, fecha_sorteo)
 VALUES
-( 1, '2018-01-01'),
-( 2, '2018-02-01'),
-( 3, '2018-03-01'),
-( 4, '2018-04-01');
+  ( 1, '2018-01-01'),
+  ( 2, '2018-02-01'),
+  ( 3, '2018-03-01'),
+  ( 4, '2018-04-01');
