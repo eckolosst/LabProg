@@ -27,7 +27,7 @@ CREATE TABLE Garante(
 
 CREATE TABLE Periodo_afiliacion(
   id_socio int,
-  id_periodo int AUTO_INCREMENT,
+  id_periodo int,
   fecha_alta DATE,
   fecha_baja DATE,
   PRIMARY KEY(id_socio,id_periodo),
@@ -53,9 +53,10 @@ CREATE TABLE Prestamo(
   id_prestamo int PRIMARY KEY AUTO_INCREMENT,
   id_solicitud int NOT NULL,
   id_tabla_referencia int NOT NULL,
+  fecha DATE;
   tasaInteres FLOAT,
   monto int,
-  FOREIGN KEY (id_solicitud) REFERENCES Solicitud_prestamo(id_solicitud) on update cascade on delete restrict);
+  FOREIGN KEY (id_solicitud) REFERENCES Solicitud_prestamo(id_solicitud) on update cascade on delete restrict,
   FOREIGN KEY (id_tabla_referencia) REFERENCES Tabla_de_referencia(id_tabla_referencia) on update cascade on delete restrict);
 
 CREATE TABLE Recibo_de_sueldo(
@@ -115,3 +116,9 @@ CREATE TABLE Tarjeta(
   titular varchar(30),
   FOREIGN KEY (id_cuota) REFERENCES Cuota(id_cuota) on update cascade on delete restrict,
   PRIMARY KEY(id_pago,id_cuota));
+
+CREATE TABLE Sorteo(
+  id_sorteo int PRIMARY KEY AUTO_INCREMENT,
+  id_socio int,
+  fecha_sorteo DATE,
+  FOREIGN KEY (id_socio) REFERENCES Socio(id_socio) ON UPDATE cascade ON DELETE restrict);
