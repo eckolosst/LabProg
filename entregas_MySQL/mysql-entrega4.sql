@@ -116,3 +116,21 @@ BEGIN
     THEN signal sqlstate '45000' set message_text = 'Ya existe una cuota de socio con ese id';
   END IF;
 END //;
+
+DELIMITER //
+CREATE TRIGGER generacionCuotasPrestamo AFTER INSERT ON Prestamo
+FOR EACH ROW
+BEGIN
+  INSERT INTO Cuota ( capital, interes,vencimiento) VALUES
+    (1000, 10,'2019-01-10'),
+    (1000, 10,'2019-02-10'),
+    (1000, 10,'2019-03-10'),
+    (1000, 10,'2019-04-10'),
+    (1000, 10,'2019-05-10');
+  INSERT INTO Cuota_prestamo (id_cuota, id_prestamo) VALUES
+    (23, NEW.id_prestamo),
+    (24, NEW.id_prestamo),
+    (25, NEW.id_prestamo),
+    (26, NEW.id_prestamo),
+    (27, NEW.id_prestamo);
+END //;
